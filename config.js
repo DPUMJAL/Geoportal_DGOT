@@ -3,18 +3,13 @@
    =========================================================== */
 
 /* === SEGURIDAD: VARIABLES AMBIENTE === */
-/**** Ahora las llaves se leen desde variables del entorno (.env o Netlify/GitHub Secrets) ****/
-/**** En GitHub Pages o local con Vite, se usan import.meta.env. En Netlify, process.env. ****/
-const SUPABASE_URL =
-  typeof process !== "undefined" && process.env?.SUPABASE_URL
-    ? process.env.SUPABASE_URL
-    : (typeof import !== "undefined" && import.meta?.env?.VITE_SUPABASE_URL) || "https://bxlxciekszzsdukmahdw.supabase.co";
+/**** En GitHub Pages no hay entorno seguro, así que usamos una copia de la key anónima (segura por diseño). ****/
+const SUPABASE_URL = "https://bxlxciekszzsdukmahdw.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4bHhjaWVrc3p6c2R1a21haGR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0MTc3MTEsImV4cCI6MjA3NDk5MzcxMX0.pRiN8XrHBes1uAwExUpEOvvi-h6OPLfQOkTiQr_rAPg";
 
-const SUPABASE_KEY =
-  typeof process !== "undefined" && process.env?.SUPABASE_ANON_KEY
-    ? process.env.SUPABASE_ANON_KEY
-    : (typeof import !== "undefined" && import.meta?.env?.VITE_SUPABASE_KEY) ||
-      "reemplaza-esto-con-tu-clave-local-si-corre-en-local";
+/**** CONEXIÓN SEGURA A SUPABASE ****/
+const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 
 /**** CONEXIÓN SEGURA A SUPABASE ****/
 const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -121,3 +116,4 @@ console.log("%c✅ Geoportal DGOT Configurado Correctamente","color:#59c1b2;font
     console.warn("⚠️ No se pudo aplicar el modo seguro:", err);
   }
 })();
+
