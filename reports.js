@@ -6,8 +6,20 @@ let saving = false;
 
 if (!window.drawnItems) {
   window.drawnItems = new L.FeatureGroup();
-  map.addLayer(window.drawnItems);
+  if (window.map && typeof window.map.addLayer === "function") {
+    window.map.addLayer(window.drawnItems);
+  } else {
+    console.warn("⚠️ Mapa aún no disponible. Se agregará luego.");
+    const waitMap = setInterval(() => {
+      if (window.map && typeof window.map.addLayer === "function") {
+        window.map.addLayer(window.drawnItems);
+        clearInterval(waitMap);
+        console.log("✅ Capa global agregada al mapa tras esperar.");
+      }
+    }, 500);
+  }
 }
+
 
 /* === INICIAR DIBUJO === */
 function startDraw(type) {
@@ -247,3 +259,4 @@ window.addEventListener("load", async () => {
   }
   await loadGrupos();
 });
+
