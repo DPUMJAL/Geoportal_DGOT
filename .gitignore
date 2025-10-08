@@ -1,0 +1,31 @@
+# === ARCHIVOS SENSIBLES ===
+.env
+.env.local
+.env.production
+.env.development
+*.key
+*.pem
+*.crt
+
+# === DEPENDENCIAS ===
+node_modules/
+package-lock.json
+yarn.lock
+
+# === BUILD / DEPLOY ===
+dist/
+build/
+.cache/
+.netlify/
+.vercel/
+
+# === SISTEMAS / TEMPORALES ===
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# === BACKUPS O ARCHIVOS DE TRABAJO ===
+*.bak
+*.tmp
