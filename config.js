@@ -9,10 +9,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 /**** CONEXIÓN SEGURA A SUPABASE ****/
 const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-
-/**** CONEXIÓN SEGURA A SUPABASE ****/
-const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+console.log("%c✅ Supabase conectado correctamente", "color:#59c1b2;font-weight:bold;");
 
 /* === FUNCIONES BÁSICAS DE INTERFAZ === */
 function $(id){ 
@@ -116,4 +113,5 @@ console.log("%c✅ Geoportal DGOT Configurado Correctamente","color:#59c1b2;font
     console.warn("⚠️ No se pudo aplicar el modo seguro:", err);
   }
 })();
+
 
