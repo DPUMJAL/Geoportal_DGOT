@@ -37,14 +37,35 @@ function startDraw(type) {
   drawTool.enable();
 
   map.once(L.Draw.Event.CREATED, (e) => {
-    drawn = e.layer;
-    window.drawnItems.addLayer(drawn);
-    if (drawn.setStyle) drawn.setStyle({ color: "#ff3333", weight: 3, fillOpacity: 0.4 });
-    if (drawn.getBounds) map.fitBounds(drawn.getBounds());
-    else if (drawn.getLatLng) map.panTo(drawn.getLatLng());
-    activeDraw.disable();
-    console.log("✅ Geometría creada:", e.layerType);
+  console.log("🎨 Nueva geometría creada:", e.layerType);
+
+  drawn = e.layer;
+  window.drawnItems.addLayer(drawn);
+
+  // Estilo visual más visible
+  if (drawn.setStyle) drawn.setStyle({
+    color: "#ff3333",
+    weight: 2.5,
+    fillColor: "#ff6666",
+    fillOpacity: 0.45
   });
+
+  // Ajuste suave al área dibujada (sin irse de foco)
+  if (drawn.getBounds) {
+    const b = drawn.getBounds();
+    if (b.isValid()) {
+      map.flyToBounds(b, { padding: [50, 50], duration: 0.7 });
+    }
+  } else if (drawn.getLatLng) {
+    map.flyTo(drawn.getLatLng(), 14);
+  }
+
+  // Desactiva herramienta de dibujo, pero no borra nada
+  if (activeDraw) activeDraw.disable();
+
+  console.log("✅ Geometría agregada correctamente al mapa.");
+});
+
 }
 
 /* === GUARDAR REPORTE === */
@@ -259,4 +280,5 @@ window.addEventListener("load", async () => {
   }
   await loadGrupos();
 });
+
 
