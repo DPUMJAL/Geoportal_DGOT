@@ -1,3 +1,19 @@
+/* === FIX DEFINITIVO: asegurar que drawnItems se cree después del mapa === */
+function ensureDrawnLayer() {
+  if (!window.map) {
+    console.warn("⏳ Esperando que el mapa se cargue...");
+    setTimeout(ensureDrawnLayer, 400);
+    return;
+  }
+  if (!window.drawnItems) {
+    window.drawnItems = new L.FeatureGroup();
+    map.addLayer(window.drawnItems);
+    console.log("✅ drawnItems inicializado correctamente.");
+  }
+}
+ensureDrawnLayer();
+
+
 /* === REPORTES (DIBUJO Y GUARDADO) === */
 
 let drawn = null;
@@ -280,5 +296,6 @@ window.addEventListener("load", async () => {
   }
   await loadGrupos();
 });
+
 
 
