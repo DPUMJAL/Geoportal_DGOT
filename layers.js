@@ -144,3 +144,18 @@ function initLayers() {
 
 } // 👈 cierre de initLayers()
 /* ************** FIN NUEVO CONTENEDOR ************** */
+  // 🚀 Inicializa las capas en cuanto el mapa esté listo
+  if (window.map) {
+    initLayers();
+    console.log("✅ Capas inicializadas correctamente.");
+  } else {
+    console.warn("⏳ Esperando que el mapa se cargue para inicializar capas...");
+    const waitMap = setInterval(() => {
+      if (window.map) {
+        clearInterval(waitMap);
+        initLayers();
+        console.log("✅ Capas inicializadas tras carga del mapa.");
+      }
+    }, 500);
+  }
+
